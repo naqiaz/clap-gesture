@@ -55,7 +55,7 @@ def main():
         [t, n_db, n_time, n_mean] = getData()
         # prints out data collected every 1 seconds
         # if(n_time > last_time + 1):
-            #print('time: ', n_time, ' // dB: ', n_db, 'clap_count: ', clap_count, 'action: ',action)
+            #print('time: ', n_time, ' // dB: ', n_db, ' // clap_count: ', clap_count, ' // action: ',action)
 
         analyze.append(float(n_db))
         nums = analyze[-2:-1]
