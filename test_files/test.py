@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 
 #phyphox configuration
-PP_ADDRESS = "http://192.168.50.199:8080" # replace with your address shown in the phyphox app!!!
+PP_ADDRESS = "http://192.168.0.10" # replace with your address shown in the phyphox app!!!
 PP_CHANNELS = ["dB", "time", "mean"]
 
 #global var to save timestamp
@@ -16,9 +16,6 @@ dB =[]
 time = []
 mean = []
 
-# make one of them true at a time
-# isAnimate = False
-# isCollectData = True 
 
 
 def getSensorData():
@@ -43,13 +40,23 @@ def getData():
 
 def main():
     clap_count = 0
-
+    threshold = 40 # -25 is a random threshold value I chose
+    lastAmplitude = 0
     while True:
         [t, n_db, n_time, n_mean] = getData()
-        print('time: ', t, ' // dB: ', n_db, ' // ', n_time, ' // ', n_mean, 'clap_count: ', clap_count)
+
+        delta = n_db - lastAmplitude
+        print('time: ', t, ' // dB: ', n_db, ' // ', n_time, ' // ', n_mean, 'clap_count: ', clap_count, delta)
         #time.sleep(INTERVALS/1000)   # Delays for INTERVALS seconds.
-        if n_db > -25: # -25 is a random threshold value I chose
-            clap_count += 1
+
+        #difference between new amplitude and last amplitude
+        
+
+        # if (delta > threshold):
+        #     clap_count += 1
+        
+
+        lastAmplitude = n_db
 
 if __name__ == '__main__':
     main()
