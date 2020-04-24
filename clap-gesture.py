@@ -48,6 +48,7 @@ def main():
     clap_count = 0
     last_time = 0.0
     reset_time = 0.0
+    clap_time = 0.0
     action = ""
     last_action = ""
     while True:
@@ -70,13 +71,14 @@ def main():
             # resets the clap counter every two seconds
             if (n_time > reset_time + 2):
                 reset_time = n_time
-                clap_count = 0; 
+                clap_count = 0
             
             # determine which action based on clap count
+            # checks the clap count every 1.5 seconds
             # 1 - clap -> play/pause
             # 2 - clap -> rewind
             # 3+ - clap -> FastForward
-            if (clap_count > 0):
+            if (clap_count > 0 and (n_time > clap_time + 1.5)):
                 if (clap_count == 1):
                     if (action == "play"):
                         action = "pause"
@@ -94,8 +96,9 @@ def main():
                         action = "forward"
                         last_action = "play"
                         # print('clap_count: ', clap_count, 'action: ', action, 'last_action: ', last_action)
+                clap_time = n_time
                         
-            # when a new action is determined, the video is manipulated based on that action
+           # when a new action is determined, the video is manipulated based on that action
             while (last_action != action):  
                 #Jess's Code
                 action = last_action = play            
