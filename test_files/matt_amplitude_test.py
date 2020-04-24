@@ -55,9 +55,14 @@ def main():
 
         analyze.append(float(n_db))
         nums = analyze[-2:-1]
+
         if len(nums) >= 1:
-            if nums[0] > -25 and (n_time > last_time + 1.0): # -25 is a random threshold value I chose
+            # was having trouble with the high resolution of this sensor... it detected 1 clap 10+ times...
+            # " n_time > last_time + 0.5 "  #  -> as soon as -25 decibel threshold is passed, waits 0.5 seconds to detect again (to prevent excess detection)
+            # seems to work for single and double claps... although may not be 100% accurate 
+            if nums[0] > -25 and (n_time > last_time + 0.5): # -25 is a random threshold value I chose
                 clap_count += 1
                 last_time = float(n_time)
+
 if __name__ == '__main__':
     main()
