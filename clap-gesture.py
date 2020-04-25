@@ -8,41 +8,26 @@ import numpy as np
 
 #phyphox configuration
 PP_ADDRESS = "http://192.168.1.99:8080" # replace with your address shown in the phyphox app!!!
-PP_CHANNELS = ["dB", "time", "mean"]
+PP_CHANNELS = ["dB", "time"]
 
-#global var to save timestamp
-xs = []
-
-# global array to save acceleration
+# global array to save amplitude data
 dB =[]
 times = []
-mean = []
-
-# make one of them true at a time
-# isAnimate = False
-# isCollectData = True 
-
 
 def getSensorData():
     url = PP_ADDRESS + "/get?" + ("&".join(PP_CHANNELS)) + "=full"
     data = requests.get(url=url).json()
     dB = data["buffer"][PP_CHANNELS[0]]["buffer"][0]
     times = data["buffer"][PP_CHANNELS[1]]["buffer"][0]
-    mean = data["buffer"][PP_CHANNELS[2]]["buffer"][0]
-    # print (accX, ' ', accY, ' ', accY)
-    return [dB, times, mean]
+    return [dB, times]
         
 def getData():
-    [n_db, n_time, n_mean] = getSensorData() # get nth sample
-    t = dt.datetime.now().strftime('%M:%S.%f') #%H:%M:%S.%f
-    xs.append(t) 
+    [n_db, n_time] = getSensorData() # get nth sample
     dB.append(n_db)
     times.append(n_time)
-    mean.append(n_mean)
-    return [t, n_db, n_time, n_mean]
+    return [n_db, n_time]
     
 # tracking number of claps
-
 def main():
     analyze = [] #list
     clap_count = 0
@@ -63,18 +48,18 @@ def main():
     last_action = ""
     
     while True:
-        [t, n_db, n_time, n_mean] = getData()
+        [n_db, n_time] = getData()
         # prints out data collected every 3 seconds
         # if(n_time > last_time + 3):
-        # print('time: ', n_time, '  dB: ', n_db, ' clap_count: ', clap_count, ' action: ',action)
+        # print('time: ', n_time, '  dB: ', n_db, ' clap_count: ', clap_count)
 
         analyze.append(float(n_db))
         nums = analyze[-2:-1]
 
         if len(nums) >= 1:
             # was having trouble with the high resolution of this sensor... it detected 1 clap 10+ times...
-            # " n_time > last_time + 0.5 "  #  -> as soon as -40 decibel threshold is passed, waits 0.5 seconds to detect again (to prevent excess detection)
-            # seems to work for single and double claps... although may not be 100% accurate 
+            # " n_time > last_time + 0.5 "  #  -> updates clap count every 0.5 seconds - (to prevent excess detection)
+            # works for single and double claps... although may not be 100% accurate 
             if nums[0] > -40  and (n_time > last_time + 0.5): # -40 is a threshold value that works 
                 clap_count += 1
                 last_time = float(n_time)
