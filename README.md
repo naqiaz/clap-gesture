@@ -1,5 +1,7 @@
 # clap-gesture
-Using the Audio Amplitude sensor in the phyphox app to detect single or double claps
+This application was created by Dong Lee, Matthew Han, Jessica Wang, Naqia Zaveri and Emily Zou to using the phyphox amplitude sensor, with the purpose of allowing for touch-free interaction during a workout.
+
+Please see the brief presentation below for an overview of the project.
 
 https://docs.google.com/presentation/d/1zRsxtP6VYTxOvFgl3i-8N3ohR0Ja3ntGVMFCTZgJWgs/edit?usp=sharing
 
