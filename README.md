@@ -1,5 +1,5 @@
 # clap-gesture
-This application was created by Dong Lee, Matthew Han, Jessica Wang, Naqia Zaveri and Emily Zou to using the phyphox amplitude sensor, with the purpose of allowing for touch-free interaction during a workout.
+This application was created by Dong Lee, Matthew Han, Jessica Wang, Naqia Zaveri and Emily Zou using the phyphox amplitude sensor, with the purpose of allowing for touch-free interaction with a youtube video during a workout. 
 
 Please see the brief presentation below for an overview of the project.
 
